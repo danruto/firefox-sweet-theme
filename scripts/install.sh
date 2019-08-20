@@ -1,8 +1,8 @@
 #!/bin/bash
 
 THEMEDIRECTORY=$(cd `dirname $0` && cd .. && pwd)
-FIREFOXFOLDER=~/.mozilla/firefox/
-PROFILENAME=""
+FIREFOXFOLDER="/Users/danny/Library/Application Support/Firefox/Profiles/"
+PROFILENAME="c49t3rns.default-release"
 GNOMISHEXTRAS=false
 
 # Get options.
@@ -23,7 +23,7 @@ if test -z "$PROFILENAME"
 fi
 
 # Enter Firefox profile folder.
-cd $PROFILEFOLDER
+cd "$PROFILEFOLDER"
 echo "Installing theme in $PWD"
 
 # Create a chrome directory if it doesn't exist.
@@ -32,20 +32,20 @@ cd chrome
 
 # Copy theme repo inside
 echo "Coping repo in $PWD"
-cp -R $THEMEDIRECTORY $PWD
+cp -R "$THEMEDIRECTORY" "$PWD"
 
 # Create single-line user CSS files if non-existent or empty.
 [[ -s userChrome.css ]] || echo >> userChrome.css
 
 # Import this theme at the beginning of the CSS files.
-sed -i '1s/^/@import "firefox-sweet-theme\/userChrome.css";\n/' userChrome.css
+sed -i '' '1s/^/@import "firefox-sweet-theme\/userChrome.css";\n/' userChrome.css
 
 # If GNOMISH extras enabled, import it in customChrome.css.
 if [ "$GNOMISHEXTRAS" = true ] ; then
 	echo "Enabling GNOMISH extra features"
-    [[ -s customChrome.css ]] || echo >> firefox-sweet-theme/customChrome.css
-	sed -i '1s/^/@import "theme\/hide-single-tab.css";\n/' firefox-sweet-theme/customChrome.css
-	sed -i '2s/^/@import "theme\/matching-autocomplete-width.css";\n/' firefox-sweet-theme/customChrome.css
+  [[ -s customChrome.css ]] || echo >> firefox-sweet-theme/customChrome.css
+	sed -i  '' '1s/^/@import "theme\/hide-single-tab.css";\n/' firefox-sweet-theme/customChrome.css
+	sed -i  '' '2s/^/@import "theme\/matching-autocomplete-width.css";\n/' firefox-sweet-theme/customChrome.css
 fi
 
 # Symlink user.js to firefox-sweet-theme one.
